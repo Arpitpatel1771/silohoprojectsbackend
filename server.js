@@ -191,8 +191,10 @@ fs.createReadStream(dataset)
                     q.term = "aaa";
                 }
                 currentquery = q.term;
-                constructResult(indexes, currentquery, rawdata);
-                res.write(JSON.stringify(result));
+                if(currentquery !== undefined && currentquery.trim().length >= 3){
+                    constructResult(indexes, currentquery, rawdata);
+                    res.write(JSON.stringify(result));
+                }
                 res.end();
 
             })
