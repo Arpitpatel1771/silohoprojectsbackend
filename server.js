@@ -7,8 +7,8 @@ var url = require('url');
 
 const recordLimit = 50;
 const dataset = "test.csv";
-let currentquery = "aaa";
-let previousquery = "aaa";
+let currentquery = "";
+let previousquery = "";
 
 const rawdata = []; //extracted from csv and sorted with smallest string first
 const indexes = {}; //nested objects that help in searching
@@ -91,6 +91,7 @@ const constructIndex = (data) => {
 
 const constructResult = (indexes, el, rawdata) => {
     if (previousquery === currentquery) return;
+    if (el.trim().length < 3) return;
 
     let arr = [];
     let key1 = el.slice(0, 1).toLowerCase();
@@ -188,13 +189,11 @@ fs.createReadStream(dataset)
                 });
                 var q = url.parse(req.url, true).query;
                 if (q.term === undefined) {
-                    q.term = "aaa";
+                    q.term = "";
                 }
                 currentquery = q.term;
-                if(currentquery !== undefined && currentquery.trim().length >= 3){
-                    constructResult(indexes, currentquery, rawdata);
-                    res.write(JSON.stringify(result));
-                }
+                constructResult(indexes, currentquery, rawdata);
+                res.write(JSON.stringify(result));
                 res.end();
 
             })
