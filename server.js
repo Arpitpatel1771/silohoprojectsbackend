@@ -202,11 +202,3 @@ fs.createReadStream(dataset)
         console.log(error.message);
     });
 
-console.log("hi");
-//create a server object:
-// http.createServer(function (req, res) {
-//     res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
-
-//     res.end();
-
-// }).listen(3001);
